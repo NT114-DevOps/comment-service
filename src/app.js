@@ -7,8 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Set port
-const port = process.env.PORT || 8002;
 
 const {
     getComments,
@@ -17,7 +15,7 @@ const {
 } = require('./controllers/commentController')
 
 app.get('/', (req, res) => {
-    res.send("Comment Service online");
+    res.send("Comment Service is running!");
 })
 
 // Get all comments on a ticket
@@ -29,13 +27,4 @@ app.post('/', createComment);
 // Delete a comment
 app.delete('/:id', deleteComment);
 
-// Connect database
-const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URI)
-   .then(() => {
-        app.listen(port, () => {
-            console.log('Connected to database');
-            console.log(`Comment service listening at http://localhost:${port}`);
-        });
-   })
-   .catch(err => console.log(err));
+module.exports = app;
